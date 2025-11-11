@@ -194,7 +194,10 @@ export function useMultiChoiceVoting() {
           // Sign the message using wallet (only once!)
           const { signTypedData } = await import("wagmi/actions");
           const signature = await signTypedData(config, {
-            domain: eip712.domain,
+            domain: {
+              ...eip712.domain,
+              verifyingContract: eip712.domain.verifyingContract as `0x${string}`,
+            },
             types: eip712.types as any,
             primaryType: 'UserDecryptRequestVerification',
             message: eip712.message,
