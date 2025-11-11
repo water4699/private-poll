@@ -5,7 +5,7 @@ import { useAccount, useReadContract } from "wagmi";
 import { Header } from "@/components/Header";
 import { CreatePollForm } from "@/components/CreatePollForm";
 import { PollList } from "@/components/PollList";
-import { useFhevm } from "@/hooks/useFhevm";
+import { useFhevmContext } from "@/hooks/useFhevmProvider";
 import { MultiChoiceVotingABI } from "@/abi/MultiChoiceVotingABI";
 import { getContractAddress } from "@/config/contract";
 
@@ -34,7 +34,7 @@ function StatCard({
 
 export default function Home() {
   const { isConnected, chain } = useAccount();
-  const { isReady: fhevmReady, error: fhevmError } = useFhevm();
+  const { isReady: fhevmReady, error: fhevmError } = useFhevmContext();
 
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [refreshTrigger, setRefreshTrigger] = useState(0);
