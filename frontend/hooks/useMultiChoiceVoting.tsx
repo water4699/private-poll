@@ -3,13 +3,13 @@
 import { useState, useCallback, useMemo } from "react";
 import { useAccount, useReadContract, useWriteContract, useWaitForTransactionReceipt } from "wagmi";
 import { hexlify } from "ethers";
-import { useFhevm } from "./useFhevm";
+import { useFhevmContext } from "./useFhevmProvider";
 import { CONTRACT_ADDRESSES } from "@/config/contract";
 import { MultiChoiceVotingABI } from "@/abi/MultiChoiceVotingABI";
 
 export function useMultiChoiceVoting() {
   const { address, chain, isConnected } = useAccount();
-  const { fhevm, isReady: fhevmReady, error: fhevmError } = useFhevm();
+  const { instance: fhevm, isReady: fhevmReady, error: fhevmError } = useFhevmContext();
   const { writeContractAsync } = useWriteContract();
   
   const [isLoading, setIsLoading] = useState(false);

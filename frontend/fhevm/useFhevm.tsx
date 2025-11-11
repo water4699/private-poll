@@ -150,7 +150,10 @@ export function useFhevm(parameters: {
         })
         .catch((e) => {
           console.log(`Error Was thrown !!! error... ` + e.name);
-          if (thisSignal.aborted) return;
+          if (thisSignal.aborted) {
+            console.log(`[useFhevm] Operation was aborted (likely due to React StrictMode or provider change)`);
+            return;
+          }
 
           // it's not possible to have a _providerRef modified without a prior abort
           _assert(
@@ -158,6 +161,7 @@ export function useFhevm(parameters: {
             "thisProvider === _providerRef.current"
           );
 
+          console.error(`[useFhevm] FHEVM initialization failed:`, e);
           _setInstance(undefined);
           _setError(e);
           _setStatus("error");
@@ -167,4 +171,3 @@ export function useFhevm(parameters: {
 
   return { instance, refresh, error, status };
 }
-
