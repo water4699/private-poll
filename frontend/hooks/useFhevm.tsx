@@ -69,22 +69,28 @@ export function FhevmProvider({ children }: { children: React.ReactNode }) {
           setFhevm(sdk);
           setIsReady(true);
           setError(null);
-        } else {
-          console.log("[FHEVM] Loading Relayer SDK for testnet...");
-          // For Sepolia testnet, use real SDK
-          const { createInstance, SepoliaConfig } = await import("@zama-fhe/relayer-sdk/web");
+        } else if (chain.id === 11155111) {
+          console.log("[FHEVM] Loading Gateway SDK for Sepolia testnet...");
+          // For Sepolia testnet, use Gateway (more stable than Relayer)
+          const { createInstance } = await import("@zama-fhe/relayer-sdk/web");
 
-          console.log("[FHEVM] Creating Relayer instance...");
+          console.log("[FHEVM] Creating Gateway instance with Sepolia config...");
           const sdk = await createInstance({
-            ...SepoliaConfig,
+            chainId: 11155111,
             network: window.ethereum,
-            relayerUrl: "https://relayer.sepolia.zama.ai",
+            gatewayUrl: "https://gateway.sepolia.zama.ai/",
+            aclContractAddress: "0x4fCBEB62ea8720ff23767a7d9a827eC4d67c6fd1",
           });
           
-          console.log("[FHEVM] ✅ Relayer instance created successfully");
+          console.log("[FHEVM] ✅ Gateway instance created successfully");
           setFhevm(sdk);
           setIsReady(true);
           setError(null);
+        } else {
+          console.log("[FHEVM] Unsupported chain:", chain.id);
+          setError(`Unsupported network (Chain ID: ${chain.id}). Please use Localhost (31337) or Sepolia (11155111).`);
+          setFhevm(null);
+          setIsReady(false);
         }
       } catch (err) {
         console.error("[FHEVM] ❌ Initialization failed:", err);
