@@ -57,10 +57,10 @@ contract MultiChoiceVoting is SepoliaConfig {
 ```
 
 **Key Privacy Features:**
-- �?Vote counts remain encrypted during voting period
-- �?Individual votes are never revealed
-- �?Homomorphic addition of encrypted votes
-- �?Results only decrypted after poll finalization
+- ✅ Vote counts remain encrypted during voting period
+- ✅ Individual votes are never revealed
+- ✅ Homomorphic addition of encrypted votes
+- ✅ Results only decrypted after poll finalization
 
 ## 🔒 Encryption & Decryption Flow
 
@@ -131,10 +131,10 @@ function finalizePoll(uint256 pollId) external {
 
 | Data | During Voting | After Finalization |
 |------|--------------|-------------------|
-| **Individual Votes** | �?Encrypted (`euint8`) | �?Never revealed |
-| **Vote Counts** | �?Encrypted (`euint8[]`) | �?Decrypted to `uint8[]` |
+| **Individual Votes** | ✅ Encrypted (`euint8`) | ✅ Never revealed |
+| **Vote Counts** | ✅ Encrypted (`euint8[]`) | ❌ Decrypted to `uint8[]` |
 | **User Participation** | ⚠️ Public (address recorded) | ⚠️ Public |
-| **Homomorphic Operations** | �?Add/Compare without decryption | N/A |
+| **Homomorphic Operations** | ✅ Add/Compare without decryption | N/A |
 
 ### Key Homomorphic Operations
 
@@ -171,21 +171,21 @@ ebool isLessThan = FHE.lt(encryptedVote, maxOptions);
 ```
 private-poll/
 ├── contracts/              # Solidity smart contracts
-�?  └── MultiChoiceVoting.sol
+│   └── MultiChoiceVoting.sol
 ├── test/                   # Test files
-�?  ├── MultiChoiceVoting.ts
-�?  └── MultiChoiceVotingSepolia.ts
+│   ├── MultiChoiceVoting.ts
+│   └── MultiChoiceVotingSepolia.ts
 ├── deploy/                 # Deployment scripts
-�?  └── deploy.ts
+│   └── deploy.ts
 ├── tasks/                  # Hardhat tasks
-�?  ├── accounts.ts
-�?  └── MultiChoiceVoting.ts
+│   ├── accounts.ts
+│   └── MultiChoiceVoting.ts
 ├── frontend/               # Next.js frontend
-�?  ├── app/               # App router pages
-�?  ├── components/        # React components
-�?  ├── hooks/             # Custom hooks
-�?  ├── config/            # Configuration
-�?  └── abi/               # Contract ABIs (auto-generated)
+│   ├── app/               # App router pages
+│   ├── components/        # React components
+│   ├── hooks/             # Custom hooks
+│   ├── config/            # Configuration
+│   └── abi/               # Contract ABIs (auto-generated)
 └── hardhat.config.ts      # Hardhat configuration
 ```
 
