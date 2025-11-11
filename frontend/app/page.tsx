@@ -77,7 +77,7 @@ export default function Home() {
     if (fhevmError) {
       return {
         label: "Initialisation failed",
-        helper: fhevmError,
+        helper: fhevmError.message || "Unknown error occurred",
         accent: "bg-gradient-to-br from-red-500/40 via-red-500/10 to-transparent",
       };
     }
